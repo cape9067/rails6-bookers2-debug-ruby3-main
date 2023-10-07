@@ -33,4 +33,20 @@ class User < ApplicationRecord
   def get_profile_image
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
   end
+  
+  def self.search_for(content, method)
+    if method == 'perfect'
+      # 完全一致検索　content と完全に一致するタイトルを持つレコードを検索
+      User.where(name: content)
+    elsif method == 'forward'
+      # 前方一致検索　content で指定された文字列で始まるタイトルを持つレコードを検索
+      User.where('name LIKE ?', content + '%')
+    elsif method == 'backward'
+      # 後方一致検索　content で指定された文字列で終わるタイトルを持つレコードを検索
+      User.where('name LIKE ?', '%' + content)
+    else
+      User.where('name LIKE ?', '%' + content + '%')
+      # 部分一致検索。content で指定された文字列を含むタイトルを持つレコードを検索します。
+    end
+  end
 end
