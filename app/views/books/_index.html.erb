@@ -18,6 +18,7 @@
         <td><%= book.body %></td>
         <td><%= render 'books/favorite', book: book %></td>
         <td>コメント数： <%= book.book_comments.count %></td>
+        <td>投稿日:<br> <%= l book.created_at, format: :short %></td>
       </tr>
     <% end %>
   </tbody>
